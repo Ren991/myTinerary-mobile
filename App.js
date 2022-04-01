@@ -1,12 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import mainReducer from './redux/reducers/mainReducer'
+import { NavigationContainer } from '@react-navigation/native';
+import DrawerNavigator from './src/navigation/drawer'
 
-export default function App() {
+
+
+export default function App() { 
+  const reduxStore = createStore(mainReducer, applyMiddleware(thunk))
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+
+    <Provider store={reduxStore}>
+      <NavigationContainer>
+        <DrawerNavigator/>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
